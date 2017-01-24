@@ -1,0 +1,58 @@
+/* ================================================================================================
+ * ANY SITE-WIDE/APPLICATION CSS PLACED IN THIS DOCUMENT
+ * For more assistance, visit http://www.auburn.edu/template/2013
+ * ================================================================================================
+ */
+
+/*****  General Page Formatting  ******************************/
+/*****  Miscellaneous Styles  *********************************/
+/*****  Header Section  ***************************************/
+/*****  Search Section  ***************************************/
+/*****  Navigation Section  ***********************************/
+/*****  Content Section  **************************************/
+/*****  Sidebar Section  **************************************/
+/*****  Footer Section  ***************************************/
+/*****  Bootstrap Overrides  **********************************/
+
+
+@media (min-width: 768px) {
+/*****  General Page Formatting  ******************************/
+/*****  Miscellaneous Styles  *********************************/
+/*****  Header Section  ***************************************/
+/*****  Search Section  ***************************************/
+/*****  Navigation Section  ***********************************/
+.header-wrap .navbar .nav > li > a { /* padding: 4px 63px 3px 63px; */ }
+.header-wrap .navbar .nav > li:last-child > a { /* padding: 4px 66px 3px 67px; */ }
+/*****  Content Section  **************************************/
+/*****  Sidebar Section  **************************************/
+/*****  Footer Section  ***************************************/
+/*****  Bootstrap Overrides  **********************************/
+}
+
+@media (min-width: 992px) {
+/*****  General Page Formatting  ******************************/
+/*****  Miscellaneous Styles  *********************************/
+/*****  Header Section  ***************************************/
+/*****  Search Section  ***************************************/
+/*****  Navigation Section  ***********************************/
+.header-wrap .navbar .nav > li > a { /* padding: 4px 63px 3px 63px; */ }
+.header-wrap .navbar .nav > li:last-child > a { /* padding: 4px 66px 3px 67px; */ }
+/*****  Content Section  **************************************/
+/*****  Sidebar Section  **************************************/
+/*****  Footer Section  ***************************************/
+/*****  Bootstrap Overrides  **********************************/
+}
+
+@media (min-width: 1200px) {
+/*****  General Page Formatting  ******************************/
+/*****  Miscellaneous Styles  *********************************/
+/*****  Header Section  ***************************************/
+/*****  Search Section  ***************************************/
+/*****  Navigation Section  ***********************************/
+.header-wrap .navbar .nav > li > a { /* padding: 4px 63px 3px 63px; */ }
+.header-wrap .navbar .nav > li:last-child > a { /* padding: 4px 66px 3px 67px; */ }
+/*****  Content Section  **************************************/
+/*****  Sidebar Section  **************************************/
+/*****  Footer Section  ***************************************/
+/*****  Bootstrap Overrides  **********************************/
+}
