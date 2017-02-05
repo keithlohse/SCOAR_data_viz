@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<title>Rehabilitation Interactive Visualization</title>
+		
+		<!-- CSS -->
+		<link rel="stylesheet" href="./css/bootstrap.min.css">
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<link href="./css/jquery.dataTables.min.css" rel="stylesheet">
+		<link href="./css/application.css" rel="stylesheet">
+		<link href="./css/dc.css" rel='stylesheet' />
+		<link href="./css/mycss.css" rel='stylesheet' />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
+
+		<!-- JS -->
+		<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script type="./js/contentslider.js"></script>
+		<script src="//dc-js.github.io/dc.js/js/colorbrewer.js"></script>
+		<script src="./js/crossfilter.js"></script>
+		<script src="./js/d3.min.js"></script>
+		<script src="./js/dc.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQ4yYk3E0pv5rwJQF1fG6qzKSiY4WVlpE"></script>
+		 		<script src="http://dimplejs.org/dist/dimple.v2.2.0.min.js"></script>
+
+		<style>
+			html, body {
+			height: 100%;
+			width: 100%;
+			margin: auto;
+			padding: 0;
+			}
+			#map {
+			height: 450px;
+			width: 100%;
+			margin: auto;
+			}
+			#bubblechartterminal {
+			}
+			
+			#exampletable{
+			margin-top: 50px;
+			margin-bottom: 30px;
+			}
+			
+			#rrow{
+			width: 60%;
+			}
+
+			.legend-img{
+			width:150px;
+			}			
+
+			body{
+				margin-top: 50px;
+				position: relative;
+			}
+		</style>
+		
+		
+	</head>
+	<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+ <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"><b>SCOAR|</b> Interactive Visualization in Stroke Rehabilitation</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+		<li><a href="./index.html">Home</a></li>
+	        <li><a href="#">Page 2</a></li>
+			<li><a href="./page3.php">Page 3</a></li>
+    </ul>
+      </div>
+    </div>
+  </div>
+</nav>    
+
+
+
+
+			
+ <section id="Group Type Bias">  
+	<div class="row  vbar2">
+	
+		<div class = "col-xs-12">
+			<h3 style="color:#0047b3;"><strong> Research question 1:</strong> Is there substantial bias?</h3>
+		<p align="justify"> This funnel plot shows the change from baseline to the terminal assessment for experimental groups and control groups as a standardized effect size, <i>Hedges' g</i>.        This Hedge's g is the terminal mean minus the baseline mean divided by the pooled standard deviation. Thus, a Hedges' g = 1 means that a group improved by 1 standard deviation from the begining        of an intervention to the end. These effect-sizes are plotted against the standard error of the effect size on the y-axis. This axis is inverted so that "up" indicates greater precision.         Plotting the data this way shows the bias in effect-sizes across studies. Small, imprecise studies are most likely to produce large effects, whereas larger trials with more precision generally         produce more modest (but still postive!) effect-sizes.        <br/>        <br/>        You can also interact with this figure by toggling between plotting all outcomes (i.e., multiple outcomes per study) or the main outcome of each study (i.e., one outcome per study, which was the         "primary outcome" if specified in the original study). You can click and drag anywhere on the plot to zoom in on a specific area. You can also click on a datapoint to get more information        about that trial! (Note that if an interaction takes you someplace you don't want to go, you can click <b>"Reset Visualization"</b> at the bottom right or <b>refresh</b> the page.</p>
+		
+		</div>
+
+		<div class = "col-xs-12">
+		  <form> 
+
+		    <fieldset class = "col-xs-6" id="group3 inline">
+			  	<p class="pull-left" style="font-weight:bold; margin-right: 5px; margin-left:15px;">Outcome:</p>
+
+			    			    <label class="radio-inline">
+			      <input type="radio" name="group3" id="checkbox1" onclick="javascript:filename0='./static/datafinal.csv'; drop0();">All Outcomes
+			    </label>
+			    			    <label class="radio-inline">
+			      <input type="radio" name="group3" onclick="javascript:filename0='./static/datafinallohse.csv'; drop0();"> Main Outcome (one per group)
+			    </label>
+		    </fieldset>
+
+		  </form>
+		  </div>
+
+
+		<div class = "col-xs-12">
+			<div id="urlList2"></div>
+		</div>
+
+			<div class = "col-md-10 col-sm-12 col-xs-12">
+				<div id="stackfilterterminal" class="collapse in">
+					<div id="bubblechartterminal2" class="collapse in">
+						<div id = "picofchart">
+							<table>
+								<tr>
+									<td>
+										<div id="bubblechartterminal2" class="collapse in">
+											<div id="x5" class="bubblechart">
+												<a class="reset" href="javascript:x5.filterAll();dc.redrawAll();" style="display: none;"></a>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class = "col-md-2 col-sm-6 col-xs-12">
+				<div id="stackgroup" class="collapse in">
+					
+					<div id="x2" class="stackfilters">
+						
+					</div>
+				</div>
+			</div>
+
+	</div>
+</section>  
+
+<section id="Group Type Bias">  
+	<div class="row  vbar1">
+		<div class = "col-md-11 col-sm-12 col-xs-12" style="margin-bottom:30px;">
+			<div id="textfirst">	
+				<h3 style="color:#0047b3;"><strong> Research question 2:</strong> What are the common experimental parameters?</h3>
+				<p align="justify"> In the funnel plot above, we can see tremendous variation in the effect sizes of different RCTs.                This variation in effect-sizes results from a multitude of factors. For instanace, differences in the study population                 (e.g., <i>age of patients, stroke etiology, other medical conditions</i>), in the intervention (e.g., <i>frequency, duration,                 intensity, method of delivery</i>), in the control group (e.g., <i>How was the control condition matched to the intervention?</i>),                and the outcomes (e.g., <i>Was there sufficient blinding of assessors? Was it lower extremity or upper extremity? A measure                 of function, activity, or participation?</i>). Because variation in these parameters may explain variation in treatment                 outcomes, it is very important to quantitatively document how interventions are being applied.                <br/>                <br/>                In the visualizations below, we present some variables related to the sample population (e.g., days from stroke to the                 start of the intervention, average age) and to the nature of the intervention (e.g., invervention duration and estimated                time scheduled for therapy). Note that these visualizes are all "tied" to each other, so you can click on "ctrl" in the                 first panel, and all of the other panels will update to show only Control groups.</p>
+				
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<div id="stackgroup" class="collapse in">
+
+						<div id="stackgroupbar" class="stackfilters">
+			
+						</div>
+					</div>
+					<div class="caption">
+						<h3>Group Type</h3>
+						<p>A single RCT might have multiple experimental and control groups. There 489 total groups in the SCOAR database,                         285 identified as experimental and 204 identified as control. Click on one of the bars in the plot above to view data                        specifically for experimental or control groups. To return to plotting all data, click "Reset Visualization".</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<div id="stackdaysbar" class="stackfilters">
+						<a class="reset" href="javascript:stackdaysbar.filterAll();dc.redrawAll();" style="display: none;"></a>
+					</div>
+					<div class="caption">
+						<h3>Time Post Stroke</h3>
+						<p>We know that timing is a critical factor in stroke rehabilitation, but when are most studies conducted? Here,                        we have groups of studies a occuring within 90 days following stroke (the "acute" phase), less than one year, or more                        than one year following stroke (the "chronic" phase). Click on a point above to see only studies from that time window.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-6 col-md-4">
+				<div class="thumbnail">
+					<div id="stackage" class="collapse in">
+						<div id="stackagebar" class="stackfilters">
+							<a class="reset" href="javascript:stackagebar.filterAll();dc.redrawAll();" style="display: none;"></a>
+						</div>
+					</div>
+					<div class="caption">
+						<h3>Average Age of Participants</h3>
+						<p>A major concern with RCTs is their external validity. That is, how well do the obtained results generalize to people                        outside of the study? Given that effects obtained in younger participants may be different from effects obtained in                         older participants, it is important to see how many studies are conducted in each at range and if age moderates treatment                         effects in some way.</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-6 col-md-6">
+				<div class="thumbnail">
+
+					<div id="stackdur" class="collapse in">
+						<div id="stackdurbar" class="stackfilters">
+							<a class="reset" href="javascript:stackdurbar.filterAll();dc.redrawAll();" style="display: none;"></a>
+						</div>
+					</div>
+					<div class="caption">
+						<h3>Intervention Duration</h3>
+						<p>The duration of an intervention is a critical component of therapy to consider and this is likely to change from region to                        to region based on differences in health care policies and the availability of care. Thus, it is important to see the distribution                        of therapy durations to look for consistencies, but also gaps, across trials. Critically, it is also important to explore                        how the duration and dose of therapy (next panel) might change as a function of other variables like time-post stroke or age.  </p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-6 col-md-6">
+				<div class="thumbnail">
+
+				
+					<div class="caption">
+						<div id="chart5"></div>
+						<h3>Time Scheduled for Therapy</h3>
+						<p>The importance of the dose of therapy and the shape of potential dose-response curves is a critical topic in rehabilitation.                         This visualization allows you to see what the dose of therapy has historically been across trials. As outlined in our                         <a href="http://journal.frontiersin.org/article/10.3389/fneur.2016.00153/full" target="_blank">review paper</a> the most consistently                         reported metric for the dose of therapy is the time scheduled for therapy. Here we present three different estimates of time scheduled                         for therapy (max, min, and the 50% compromise between the two). Please refer to the SCOAR review paper or the data-dictionary below for                        more information about these calculations.</p>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</section>  
+<section id="Terminal Hedge">
+	<div class="row  vbar2">
+		<div class = "col-md-11 col-sm-12 col-xs-12" style="margin-bottom:30px;">
+			<div id="textfirst">	
+				<h3 style="color:#0047b3;"><strong> Research question 3:</strong> What treatments are more effective and for whom?</h3>
+				<p align="justify"> In the bubble chart below, you can plot time scheduled for therapy (as either time_min, time_50, or time_max), against the                 terminal Hedges' g on the y axis. You can also choose to plot all outcomes from all studies, or plot only the main outcomes (one per group).                                The color of the bubbles shows seven different outcome types, and you can filter the results based on outcome type by clicking on the labels to the                 right. (Note that an explanation of these labels is provided in the                 <a href="http://journal.frontiersin.org/article/10.3389/fneur.2016.00153/full" target="_blank">SCOAR review paper</a>.)                You can click and drag on the image to zoom, and clicking on a data point will give you additional information about that group/study.</p>
+				<p align="justify">By toggling through the different outcome types, you can see how these data show different potential dose response relationships                 as a function of what is being measured. However, numerous other factors are going to affect the dose-response relationship, such as the                 timing of the intervention, the type of therapy received, and the age of the patients. Other variables are going to affect the dose-response curve,                 but timing, group, and age are readily available in SCOAR. You can filter the bubble chart by interacting with the other plots below.                 For instance, to see on control groups, click on the "ctrl" bar. For filtering based on the age of the patients, you can drag and select an interval of ages on the age chart.                 The filters can always be removed by clicking on "Reset Visualization". For more information for how to use the filters, please see the <a href="#Video">"Video"</strong></a> section.</p>				
+			</div>
+			<p class="pull-left" style="font-weight:bold; padding-top: 6px; margin-right: 5px;">Data:</p>
+	
+		
+	
+		
+		<div class = "col-xs-12">
+			<div id="urlList"></div>
+		</div>
+
+		
+		
+		<div class = "col-xs-12">
+		  <form> 
+
+		  	 <fieldset class = "col-xs-6" id="group1 inline">
+			  	<p class="pull-left" style="font-weight:bold; margin-right: 5px; margin-left:15px;">X Axis:</p>
+			    <label class="radio-inline">
+			      <input type="radio" name="group1" id="checkbox2" onclick="javascript:timeNum=1; drop2();">Time_50
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio" name="group1" onclick="javascript:timeNum=2; drop2();">Time_Max
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio" name="group1" onclick="javascript:timeNum=4; drop2();">Time_Min
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio" name="group1" onclick="javascript:timeNum=3; drop2();">days_ps
+			    </label>
+		    </fieldset>
+
+		    <fieldset class = "col-xs-6" id="group2 inline">
+			  	<p class="pull-left" style="font-weight:bold; margin-right: 5px; margin-left:15px;">Y Axis:</p>
+			    <label class="radio-inline">
+			      <input type="radio" name="group2" id="checkbox3" onclick="javascript:yNum=1; drop2();">Terminal Effects Size
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio" name="group2" onclick="javascript:yNum=2; drop2();">Follow up Effects Size
+			    </label>
+		    </fieldset>
+
+		    <fieldset class = "col-xs-6" id="group3 inline">
+			  	<p class="pull-left" style="font-weight:bold; margin-right: 5px; margin-left:15px;">Outcome:</p>
+
+			    			    <label class="radio-inline">
+			      <input type="radio" name="group3" id="checkbox4" onclick="javascript:filename1='./static/datafinal.csv'; drop2();">Additional Outcome
+			    </label>
+			    			    <label class="radio-inline">
+			      <input type="radio" name="group3" onclick="javascript:filename1='./static/datafinallohse.csv'; drop2();"> Main Outcome
+			    </label>
+		    </fieldset>
+
+		  </form>
+		  </div>
+
+		
+		<div class = "col-xs-12">
+			<div id="urlList"></div>
+		</div>
+
+			<div class = "col-md-11 col-sm-12 col-xs-12">
+				<div id="stackfilterterminal" class="collapse in">
+					<div id="bubblechartterminal2" class="collapse in">
+						<div id = "picofchart">
+							<table>
+								<tr>
+									<td>
+										<div id="bubblechartterminal2" class="collapse in">
+											<div id="terminaleffectssizebubble2" class="bubblechart">
+												<a class="reset" href="javascript:terminaleffectssizebubble.filterAll();dc.redrawAll();" style="display: none;"></a>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class = "col-md-1 col-sm-6 col-xs-12">
+				<div id="stackgroup" class="collapse in">
+					
+					<div id="stackgroupbar3" class="stackfilters">
+						
+					</div>
+				</div>
+			</div>
+			<div class = "col-md-3 col-sm-6 col-xs-12">
+				<div id="stackdays1" class="collapse in">
+					
+					<div id="stackdaysbar2" class="stackfilters">
+						<a class="reset" href="javascript:stackdaysbar.filterAll();dc.redrawAll();" style="display: none;"></a>
+					</div>
+				</div>
+			</div>
+
+
+
+	        <div class = "col-lg-3 col-md-3 col-sm-6 col-xs-12">
+				<div id="stackgroup" class="collapse in">
+					<div id="stackgroupbar2" class="stackfilters">
+						
+					</div>
+				</div>
+			</div>
+	
+			<div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				
+				<div id="stackage" class="collapse in">
+					<div id="stackagebar2" class="stackfilters">
+						<a class="reset" href="javascript:stackagebar.filterAll();dc.redrawAll();" style="display: none;"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> 
+
+
+
+
+            <section id="Database">
+            	<div class="row  vbar1">
+					<div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		                <h3 style="color:#0047b3;">Database</h3> 
+						<p align="justify">The SCOAR database includes many categorical and numerical values that were extracted from over two hundred randomized controlled trials in stroke therapy.                         The coding/calculation of some of the variables is quite detailed and we would directed interested readers to the                         <a href="http://journal.frontiersin.org/article/10.3389/fneur.2016.00153/full" target="_blank"> SCOAR review paper</a>.                         The basic variables and the most essential variables that were used in our visualizations are briefly explained below. The full database (as of 2016-03-31),                         the data dictionary, a full reference list of all trials, and the Creative Commons license for SCOAR are available from <a href="http://github.com/keithlohse/SCOAR">Github.</a>  </p>
+					</div>
+				<div class = "col-md-6 col-sm-12 col-xs-12">
+					<p align="justify"><kbd> Author:</kbd> The last name/surname of the first author. Entered all lowercase. In the case of follow-up studies being combined with an original publication the format will be “surname1/surname2”.</p>
+					
+					<p align="justify"><kbd>Year:</kbd> A four digit number indicating the year of publication. In the case of follow-up studies being combined with an original publication the format will be “year1/year2”. </p>
+					
+					<p align="justify"><kbd> Time Max, Time 50, Time Min:</kbd> Given the issues with different types of therapy, it is not always clear how time was spent in therapy. In CIMT, for instance, participants might spend 5 hours per day under constraint for 5 days per week, for 4 weeks (100 total hours of constraint). To resolve this issue we have created three different calculations of total time:<p>
+					
+					<p align="justify"><kbd>Time_MAX:</kbd> a total time calculation where 100% of constraint time is counted as time in therapy. </p>
+					<p align="justify"><kbd>Time_50:</kbd> a total time calculation where 50% of constraint time is counted as time in therapy (we consider this calculation to be the most plausible as some, but not all, constraint time is counted). </p>
+					<p align="justify"><kbd>Time_MIN:</kbd> a total time calculation where 0% of constraint time is counted as time in therapy. </p>
+					<p align="justify"><kbd>Days ps:</kbd> Patients' chronicity. That is, the average time, in days, from the patient's stroke to the beginning of the intervention. </p>
+					<p align="justify"><kbd>Age base:</kbd> Average age, in years, of the experimental/control group at the baseline assessment. </p>
+					<p align="justify"><kbd>Term g:</kbd> The terminal Hedges' g (i.e., terminal Cohen's d multiplied by the correction factor). Subtraction was arranged so that positive values always reflect improvement from baseline. </p>
+					<p align="justify"><kbd>Fu g:</kbd> The follow-up Hedges' g (i.e., follow-up Cohen's d multiplied by the correction factor). Subtraction was arranged so that positive values always reflect improvement from baseline. </p>
+					<p><kbd>Term vg:</kbd> Variance of the terminal Hedges' g. </p>
+					<p><kbd>Standard error:</kbd> square root of Term vg. </p>
+								</div>  
+
+			<div class = "col-lg-5 col-md-5 col-md-offset-1 col-sm-12 col-xs-12">
+
+
+<p align="justify"><kbd> Group:</kbd>A categorical variable indicating whether the data come from an experimental group, "exp", or a control group "ctrl" as described in the original study. </p>
+<p align="justify"><kbd>Group id:</kbd> Numeric value identifying an independent group of participants. Note that multiple groups of participants will come from the same study and that a single group might be measured on several outcomes in the database (i.e., there may be multiple outcomes per group). </p>
+
+
+<p align="justify"><kbd>Base n:</kbd> Given the description in the text, this is the number of participants whose data contribute to the baseline mean (base_m) and baseline standard deviation (base_sd) calculations. Note that this is not necessarily the number of participants randomized to each group, depending on how the authors conducted their analysis. </p>
+					
+			
+					
+					<p><kbd>Outcome Name:</kbd> The name of the outcome measure being recorded on that row. At the moment (2016-01-31) we have one outcome measure per study, but as the data base grows, we will have more. Common abbreviations include: 
+					
+					<ul style="margin-left:30px;">
+						<li><strong>6mwt:</strong> Six-Minute Walk Test</li>
+						<li><strong>arat: </strong> Action Research Arm Test </li>
+						<li><strong>bbs: </strong> Berg Balance Scale</li>
+						<li><strong>fac: </strong> Functional Ambulation Category </li>
+						<li><strong>fim: </strong> Functional Independence Measure </li>
+						<li><strong>fma: </strong> Fugl-Meyer Assessment </li>
+						<li><strong>fma-ue: </strong> Fugl-Meyer Assessment, upper extremity items only </li>
+						<li><strong>fma-le: </strong> Fugl-Meyer Assessment, lower extremity items only </li>
+						<li><strong>tug: </strong> Timed 'Up and Go' Test </li>
+						<li><strong>wmft: </strong> Wolf Motor Function Test </li>
+					</ul>
+					</p>
+
+			</div> 
+			   </div>             
+</section>
+
+
+
+
+	
+	<!--
+	Substantial bias
+	-->
+	
+
+	<script src="./js/data.js"></script>
+
+
+
+<script>
+
+var checkbox1 = document.getElementById("checkbox1");
+checkbox1.checked = true;
+
+var checkbox2 = document.getElementById("checkbox2");
+checkbox2.checked = true;
+
+var checkbox3 = document.getElementById("checkbox3");
+checkbox3.checked = true;
+
+var checkbox4 = document.getElementById("checkbox4");
+checkbox4.checked = true;
+
+
+
+
+windowsW=screen.width;
+		//timeNum=1;
+		filename0='./static/datafinal.csv';
+		function drop0(){
+				$('#urlList2').html('');
+			d3.csv(filename0, function(datafinal) {
+			datafinal.forEach(function(d) {
+				d.missingdata = d["MissingData"];
+			    d.group = d["group"];
+			    d.outcomenamecat = d["outcomenamecat"];
+				d.days_cat = d["days_cat"];
+				d.age_category = d["age_category"];
+				d.age_base = parseFloat(d["age_base"]);
+				d.base_n = parseFloat(d["base_n"]);
+				d.url=d["url"];
+				
+				/*
+				if(timeNum==1)
+					d.time_50 = parseFloat(d["time_50"]);
+				else if(timeNum==2)
+					d.time_50 = parseFloat(d["time_MAX"]);
+				else
+					d.time_50 = parseFloat(d["time_MIN"]);
+				if (filename0=='./static/datafinal.csv')
+					d.term_g = parseFloat(d["term_g"])
+				else d.term_g = parseFloat(d["fu_g"]);
+				*/
+				d.time_50= parseFloat(d["term_g"]);
+				d.term_g = parseFloat(d["SE"]);
+				d.termvginv = parseFloat(d["termvginv"]);
+				d.group_id = d["group_id"];
+			  });
+			  
+
+			var x2 = dc.rowChart('#x2');
+			var x5 = dc.bubbleChart('#x5');
+			//var groupbubble = dc.bubbleChart('#groupbubble');
+			var numberFormat1 = d3.format(".3f");
+			var numberFormat2 = d3.format(",.0f");
+								
+			// cross filter object
+			var crossDataforviz = crossfilter(datafinal);
+			var groupDim = crossDataforviz.dimension(function (d) {return d.group;});
+			var days_catDim = crossDataforviz.dimension(function (d) {return d.days_cat;});
+			var age_baseDim = crossDataforviz.dimension(function (d) {return d.age_base;});
+			var group_idDim = crossDataforviz.dimension(function (d) {return d.index;});
+			var group_idDim2 = crossDataforviz.dimension(function (d) {return d.group_id;});
+			var minusage_base = age_baseDim.bottom(1)[0].age_base;
+			var maxusage_base= age_baseDim.top(1)[0].age_base;
+			var groupGroup = groupDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+			
+
+
+			var outcomeDim = crossDataforviz.dimension(function (d) {return d.outcomenamecat;});
+			var outcomeGroup = outcomeDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+
+			var days_catGroup = days_catDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+														
+			var age_baseGroup = age_baseDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+													
+			var group_idGroup = group_idDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														p.time_50Sum += v.time_50;
+														p.url = v.url;
+														p.avgtime_50 = p.count ? p.time_50Sum / p.count : 0;
+														p.base_n = p.count ? v.base_n / p.count : 0;
+
+
+
+														p.term_gSum += v.term_g;
+														p.avgterm_g = p.count ? p.term_gSum / p.count : 0;
+														p.termvginvSum += v.termvginv;
+														p.avgtermvginv = p.count ? p.termvginvSum / p.count : 0;
+														p.outcomenamecatList.push(v.group);
+														return p;},
+														function (p, v) {
+														--p.count;
+														p.time_50Sum -= v.time_50;
+														p.avgtime_50 = p.count ? p.time_50Sum / p.count : 0;
+														p.base_n = p.count ? v.base_n / p.count : 0;
+
+
+
+														p.term_gSum -= v.term_g;
+														p.avgterm_g = p.count ? p.term_gSum / p.count : 0;
+														p.termvginvSum -= v.termvginv;
+														p.avgtermvginv = p.count ? p.termvginvSum / p.count : 0;
+														p.outcomenamecatList.pop(v.group);
+														return p;
+														},
+														function () {
+														return {count: 0,time_50Sum: 0,
+																avgtime_50: 0, 
+																base_n: 0,
+																term_gSum: 0, 
+																avgterm_g: 0,
+																termvginvSum: 0,
+																avgtermvginv: 0,
+																outcomenamecatList:[]}});
+
+														
+			x5 
+			.width(windowsW*9/12)
+			.height(300)
+			.margins({top: 15, left: 40, right: 15, bottom: 30})
+			.dimension(group_idDim)
+			.group(group_idGroup)
+			.colors(d3.scale.ordinal().range([ '#7fc97f', '#A020F0'])
+			.domain(['ctrl','exp']))
+			.colorAccessor(function (d) {return d.value.outcomenamecatList[0];})
+			.keyAccessor(function (p) {
+					return p.value.avgtime_50;
+				})
+			.valueAccessor(function (p) {return p.value.avgterm_g;})
+			.radiusValueAccessor(function (p) {if(p.value.avgtime_50==0 || p.value.term_g==0) {return 0;} else {return 0.1;}})
+			.x(d3.scale.linear().domain([-1.0,4.5]))
+			.y(d3.scale.linear().domain([1.0, 0]))
+			.r(d3.scale.linear().domain([1000.0 , 10]))
+			.elasticY(false)
+			.elasticX(false)
+			.elasticRadius(false)
+			.yAxisPadding(1)
+			.xAxisPadding(.2)
+			.maxBubbleRelativeSize(0.005)
+			.renderHorizontalGridLines(true)
+			.renderVerticalGridLines(true)
+			.mouseZoomable(true)
+			.xAxisLabel('term g')
+			.yAxisLabel('SE')
+			.renderTitle(true)
+			.renderLabel(false)
+			.title(function (p){
+				
+
+				thetime='Term g ';
+				theyaxis='SE '
+				return ['Index: ' + p.key,
+				thetime+ ': ' + p.value.avgtime_50,
+				theyaxis + ': ' + Math.round(p.value.avgterm_g * 1000) / 1000 ,
+				'Group Name: ' + p.value.outcomenamecatList[0], p.value.url].join('\n');
+				})
+
+
+			x5.filterHandler(function(dim, filters) {
+				
+				urltxt="<span style='font-weight:bold'>Click to open the papers: </span>"
+				
+				for (var i =0 ; i < filters.length ; i++)
+					datafinal.forEach(function(d) {
+						if(d.index==filters[i]){
+							urltxt+="<kbd><a class='paperItem' href='"+d.url+"'  target='_blank'>"+d.id+"</a></kbd>   ";
+						}
+				})
+				$('#urlList2').html(urltxt);			
+			});
+
+/*
+			var node11 = legend.selectAll(".legendItem")
+          .data(clusterData)
+          .enter().append("g")
+          .attr("class", "legendItem")
+          .on('click', function(d){clusterClick(d.cluster-1, this)});
+*/
+				//d3.selectAll("circle").on("contextmenu",
+				//	function(){d3.event.preventDefault(); console.log("http://google.com");});
+		//mysvg=d3.select(".node").data(datafinal).enter();
+		//console.log(mysvg);
+
+//mysvg.on('click', function() {console.log(1)});
+
+				x5.yAxis().tickFormat(d3.format(",.2f")).ticks(10)
+				x5.xAxis().tickFormat(d3.format(",.2f")).ticks(10)
+
+              
+			
+//************************************************************************************************
+
+
+colorList=["#FF0000", "#A020F0"]
+
+
+
+
+	x2
+		.width(70)
+		.height(100)
+		.margins({top: 20, left: 40, right: 20, bottom: 40})
+		.group(groupGroup)
+		.dimension(groupDim)
+		.colors(d3.scale.ordinal().range([ '#7fc97f', '#A020F0'])
+		.domain(['ctrl','exp']))
+		.valueAccessor(function (d) {return 1;})
+		.margins({top: 0, right: 0, bottom: -1, left: 0})
+		.label(function (d) {
+			return d.key;})
+			
+		.title(function (d) {
+			return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+		})
+		.elasticX(true)
+		.xAxis().ticks(5);															 
+
+//************************************************************************************************
+
+dc.renderAll();
+
+			function AddXAxis(chartToUpdate, displayText) {
+			    chartToUpdate.svg()
+			                .append("text")
+			                .attr("class", "x-axis-label")
+			                .attr("text-anchor", "middle")
+			                .attr("x", chartToUpdate.width()/2)
+			                .attr("y", chartToUpdate.height()-3.5)
+							.attr("margin-top", "200px")
+			                .text(displayText);
+			}
+			});
+	}
+
+	drop0('./static/folloda.csv');
+	</script>  
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+		timeNum=1;
+		yNum = 1;
+		outNum=1;
+		filename1='./static/datafinal.csv';
+		function drop2(){
+				$('#urlList').html('');
+			d3.csv(filename1, function(datafinal) {
+			datafinal.forEach(function(d) {
+				d.missingdata = d["MissingData"];
+			    d.group = d["group"];
+			    d.outcomenamecat = d["outcomenamecat"];
+				d.days_cat = d["days_cat"];
+				d.age_category = d["age_category"];
+				d.age_base = parseFloat(d["age_base"]);
+				d.base_n = parseFloat(d["base_n"]);
+				d.url=d["url"];
+				
+				if(timeNum==1)
+					d.time_50 = parseFloat(d["time_50"]);
+				else if(timeNum==2)
+					d.time_50 = parseFloat(d["time_MAX"]);
+				else if(timeNum==3)
+					d.time_50 = parseFloat(d["days_ps"]);
+				else
+					d.time_50 = parseFloat(d["time_MIN"]);
+
+
+
+
+
+				if (yNum==1)
+					d.term_g = parseFloat(d["term_g"])
+				else d.term_g = parseFloat(d["fu_g"]);
+
+				d.term_g = parseFloat(d["term_g"]);
+				d.termvginv = parseFloat(d["termvginv"]);
+				d.group_id = d["group_id"];
+			  });
+			  
+			
+			var stackgroupbar = dc.rowChart('#stackgroupbar2');
+			var stackgroupbar3 = dc.rowChart('#stackgroupbar3');
+
+			var stackdaysbar = dc.barChart('#stackdaysbar2');
+			var stackagebar = dc.barChart('#stackagebar2');
+			var terminaleffectssizebubble = dc.bubbleChart('#terminaleffectssizebubble2');
+			//var groupbubble = dc.bubbleChart('#groupbubble');
+			var numberFormat1 = d3.format(".3f");
+			var numberFormat2 = d3.format(",.0f");
+								
+			// cross filter object
+			var crossDataforviz = crossfilter(datafinal);
+			var groupDim = crossDataforviz.dimension(function (d) {
+				return d.group;});
+			var days_catDim = crossDataforviz.dimension(function (d) {
+				return d.days_cat;});
+			
+			var age_baseDim = crossDataforviz.dimension(function (d) {
+					return d.age_base;});
+			
+
+			var group_idDim = crossDataforviz.dimension(function (d) {
+					return d.index;});
+			
+			var group_idDim2 = crossDataforviz.dimension(function (d) {
+				return d.group_id;});
+			
+
+			var minusage_base = age_baseDim.bottom(1)[0].age_base;
+			var maxusage_base= age_baseDim.top(1)[0].age_base;
+			var groupGroup = groupDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+			
+
+
+			var outcomeDim = crossDataforviz.dimension(function (d) {return d.outcomenamecat;});
+			var outcomeGroup = outcomeDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+
+			var days_catGroup = days_catDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+														
+			var age_baseGroup = age_baseDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+													
+			var group_idGroup = group_idDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														p.time_50Sum += v.time_50;
+														p.url = v.url;
+														p.SCOAR_outcome=v.SCOAR_outcome;
+														p.avgtime_50 = p.count ? p.time_50Sum / p.count : 0;
+														p.term_gSum += v.term_g;
+														p.avgterm_g = p.count ? p.term_gSum / p.count : 0;
+														p.termvginvSum += v.termvginv;
+														p.avgtermvginv = p.count ? p.termvginvSum / p.count : 0;
+														p.outcomenamecatList.push(v.outcomenamecat);
+														return p;},
+														function (p, v) {
+														--p.count;
+														p.time_50Sum -= v.time_50;
+
+														p.SCOAR_outcome=v.SCOAR_outcome;
+														p.avgtime_50 = p.count ? p.time_50Sum / p.count : 0;
+														p.term_gSum -= v.term_g;
+														p.avgterm_g = p.count ? p.term_gSum / p.count : 0;
+														p.termvginvSum -= v.termvginv;
+														p.avgtermvginv = p.count ? p.termvginvSum / p.count : 0;
+														p.outcomenamecatList.pop(v.outcomenamecat);
+														return p;
+														},
+														function () {
+														return {count: 0,time_50Sum: 0,
+																SCOAR_outcome:"",
+																avgtime_50: 0, 
+																term_gSum: 0, 
+																avgterm_g: 0,
+																termvginvSum: 0,
+																avgtermvginv: 0,
+																outcomenamecatList:[]}});
+
+														
+			terminaleffectssizebubble 
+			.width(windowsW*17/24)
+			.height(300)
+			.margins({top: 15, left: 40, right: 15, bottom: 30})
+			.dimension(group_idDim)
+			.group(group_idGroup)
+			.colors(d3.scale.ordinal().range([ '#7fc97f', '#beaed4', '#fdc086','#ffff99', '#386cb0','#f0027f','#bf5b17'])
+			.domain(['other','fma','balance','speed','capacity','wmft','arat']))
+			.colorAccessor(function (d) {return d.value.outcomenamecatList[0];})
+			.keyAccessor(function (p) {
+					return p.value.avgtime_50;
+				})
+			.valueAccessor(function (p) {return p.value.avgterm_g;})
+			.radiusValueAccessor(function (p) {if(p.value.avgtime_50==0 || p.value.term_g==0) {return 0;} else {
+				return .1;
+		}})
+			.x(d3.scale.linear().domain([0,250]))
+			.y(d3.scale.linear().domain([2.5, -.5]))
+			.r(d3.scale.linear().domain([1.0 , 0]))
+			.elasticY(true)
+			.elasticX(false)
+			.elasticRadius(false)
+			.yAxisPadding(1)
+			.xAxisPadding(5)
+			.maxBubbleRelativeSize(0.005)
+			.renderHorizontalGridLines(true)
+			.renderVerticalGridLines(true)
+			.mouseZoomable(true)
+			.xAxisLabel(function () {
+				if(timeNum==1)
+					return 'Time 50 (Hours)';
+				else if(timeNum==2)
+					return 'Time MAX (Hours)';
+				else if(timeNum==3)
+					return'days_ps (Days): ';
+				else
+					return'Time MIN (Hours): ';
+				})
+			.yAxisLabel(function () {
+				if (yNum==1)
+					return 'Term G';
+				else return 'Follow up g';
+			})
+			.renderTitle(true)
+			.renderLabel(false)
+			.title(function (p){
+				
+				theyaxis='Follow up g: '
+				if(timeNum==1)
+					thetime='Time 50 (Hours): ';
+				else if(timeNum==2)
+					thetime='Time MAX (Hours): ';
+				else if(timeNum==3)
+					thetime='days_ps (Days): ';
+				else
+					thetime='Time MIN (Hours): ';
+				
+
+				if (yNum==1)
+					theyaxis='Term G: ';
+
+				return ['Group id: ' + p.key,
+				thetime +': ' + p.value.avgtime_50,
+				theyaxis + ': ' + Math.round(p.value.avgterm_g * 1000) / 1000 ,
+				'Outcome Name: ' + p.value.outcomenamecatList[0], p.value.url].join('\n');
+				})
+
+
+			terminaleffectssizebubble.filterHandler(function(dim, filters) {
+				
+				urltxt="<span style='font-weight:bold'>Click to open the papers: </span>"
+				
+				for (var i =0 ; i < filters.length ; i++)
+					datafinal.forEach(function(d) {
+						if(d.index==filters[i]){
+							urltxt+="<kbd><a class='paperItem' href='"+d.url+"'  target='_blank'>"+d.id+"</a></kbd>   ";
+						}
+				})
+				$('#urlList').html(urltxt);			
+			});
+
+/*
+			var node11 = legend.selectAll(".legendItem")
+          .data(clusterData)
+          .enter().append("g")
+          .attr("class", "legendItem")
+          .on('click', function(d){clusterClick(d.cluster-1, this)});
+*/
+				//d3.selectAll("circle").on("contextmenu",
+				//	function(){d3.event.preventDefault(); console.log("http://google.com");});
+		//mysvg=d3.select(".node").data(datafinal).enter();
+		//console.log(mysvg);
+
+//mysvg.on('click', function() {console.log(1)});
+
+				terminaleffectssizebubble.yAxis().tickFormat(d3.format(",.0f")).ticks(10)
+				terminaleffectssizebubble.xAxis().tickFormat(d3.format(",.0f")).ticks(12)
+
+              
+			
+//************************************************************************************************
+
+
+colorList=["#FF0000", "#D2691E", "#00FF00", "#A020F0", "#0000FF", "#FFFF00", "#FFC0CB"]
+
+
+
+
+	stackgroupbar3
+		.width(70)
+		.height(250)
+		.margins({top: 20, left: 40, right: 20, bottom: 40})
+		.group(outcomeGroup)
+		.dimension(outcomeDim)
+		.colors(d3.scale.ordinal().range([ '#7fc97f', '#beaed4', '#fdc086','#ffff99', '#386cb0','#f0027f','#bf5b17'])
+		.domain(["others", "fma","balance", "speed", "capacity", "wmft", "arat"]))
+		.valueAccessor(function (d) {return 1;})
+		.margins({top: 0, right: 0, bottom: -1, left: 0})
+		.label(function (d) {
+			return d.key;})
+			
+		.title(function (d) {
+			return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+		})
+		.elasticX(true)
+		.xAxis().ticks(5);															 
+
+//************************************************************************************************
+
+
+												stackgroupbar
+											.width(windowsW*5/24)
+											.height(250)
+											.margins({top: 20, left: 40, right: 20, bottom: 50})
+											.group(groupGroup)
+											.dimension(groupDim)
+											.colors(d3.scale.ordinal().range([ '#fa9fb5', '#c51b8a'])
+											.domain(["Ctrl", "Exp"]))
+											.valueAccessor(function (d) {return d.value.count;})
+											.label(function (d) {
+												return d.key;})
+												
+											.title(function (d) {
+												return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+											})
+											.elasticX(true)
+											.xAxis().ticks(5);
+														 
+														stackagebar
+												        .width(windowsW*10/24)
+														.height(250)
+														.margins({top: 20, left: 30, right: 20, bottom: 40})
+														.dimension(age_baseDim)
+														.group(age_baseGroup)
+														.valueAccessor(function (d) {return d.value.count;})
+														.title(function (d) {
+															return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+														})
+														.transitionDuration(500)
+														.centerBar(true)	
+														.x(d3.scale.linear().domain([30,90]))
+														.yAxisLabel("Number of Groups")
+														.xAxisLabel("Average Age")
+														.colors( ['#005689'])
+														.elasticX(false)
+														.elasticY(true)
+														.yAxis().ticks(5);
+														
+													stackagebar.xAxis().tickFormat(d3.format("02d"))
+													stackagebar.yAxis().tickFormat(d3.format("d"))
+													stackagebar.xUnits(function(){return 50;});	
+
+												stackdaysbar
+												
+													.width(windowsW*5/24)
+													.height(250)
+													.margins({top: 20, left: 40, right: 20, bottom: 40})
+								
+													.x(d3.scale.ordinal().domain(["<1year", "<90days", ">1year", "Not Available"]))
+													.xUnits(dc.units.ordinal)
+													.brushOn(false)
+													.yAxisLabel("Number of Groups")
+													.xAxisLabel("Days pre Therapy")
+													.dimension(days_catDim)
+													.group(days_catGroup)
+													
+								
+													.valueAccessor(function (d) {return d.value.count;})
+													.label(function (d) {
+															return d.key;})
+													.renderHorizontalGridLines(true)
+								                    .colors(d3.scale.ordinal().range([ '#25a55f', '#009999', '#009999', '#009999'])
+														.domain(["<1year", "<90days", ">1year", "Not Available"]))
+													 
+													.title(function (d) {
+														return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+													})
+													.elasticX(true);
+													dc.renderAll();
+
+			function AddXAxis(chartToUpdate, displayText) {
+			    chartToUpdate.svg()
+			                .append("text")
+			                .attr("class", "x-axis-label")
+			                .attr("text-anchor", "middle")
+			                .attr("x", chartToUpdate.width()/2)
+			                .attr("y", chartToUpdate.height()-3.5)
+							.attr("margin-top", "200px")
+			                .text(displayText);
+			}
+			});
+	}
+
+	drop2('./static/folloda.csv');
+	</script>  
+
+
+
+
+
+<script>
+		timeNum=1;
+		filename1='./static/datafinal.csv';
+		function drop1(){
+				$('#urlList').html('');
+			d3.csv(filename1, function(datafinal) {
+			datafinal.forEach(function(d) {
+				d.index = parseFloat(d["index"]);
+				d.missingdata = d["MissingData"];
+			    d.group = d["group"];
+				d.days_cat = d["days_cat"];
+				d.age_category = d["age_category"];
+				d.age_base = parseFloat(d["age_base"]);
+				d.exp_dur = parseFloat(d["exp_dur"]);
+				d.base_n = parseFloat(d["base_n"]);
+
+				d.url=d["url"];
+				
+				if(timeNum==1)
+					d.time_50 = parseFloat(d["time_50"]);
+				else if(timeNum==2)
+					d.time_50 = parseFloat(d["time_MAX"]);
+				else if(timeNum==3)
+					d.time_50 = parseFloat(d["time_MIN"]);
+				else
+					d.time_50 = parseFloat(d["days_ps"]);
+
+
+
+				if (filename1=='./static/datafinal.csv')
+					d.term_g = parseFloat(d["term_g"])
+				else d.term_g = parseFloat(d["fu_g"]);
+
+				d.term_g = parseFloat(d["term_g"]);
+				d.termvginv = parseFloat(d["termvginv"]);
+				d.outcomenamecat = d["outcomenamecat"];
+				d.group_id = d["group_id"];
+			  });
+			  
+			
+			var stackgroupbar = dc.rowChart('#stackgroupbar');
+			var stackdaysbar = dc.barChart('#stackdaysbar');
+			var stackdurbar = dc.lineChart('#stackdurbar');
+			var stackagebar = dc.barChart('#stackagebar');
+			//var groupbubble = dc.bubbleChart('#groupbubble');
+			var numberFormat1 = d3.format(".3f");
+			var numberFormat2 = d3.format(",.0f");
+								
+			// cross filter object
+			var crossDataforviz = crossfilter(datafinal);
+			var groupDim = crossDataforviz.dimension(function (d) {return d.group;});
+			var days_catDim = crossDataforviz.dimension(function (d) {return d.days_cat;});
+			var age_baseDim = crossDataforviz.dimension(function (d) {return d.age_base;});
+			var exp_durDim = crossDataforviz.dimension(function (d) {return d.exp_dur;});
+			var group_idDim = crossDataforviz.dimension(function (d) {return d.group_id;});
+			var dim = crossDataforviz.dimension(function (d) {return d.index;});
+
+			 var chart5 = dc.compositeChart('#chart5'),
+            lgroup = dim.group().reduceSum(function(d) { return d.time_50; }),
+            rgroup = dim.group().reduceSum(function(d) { return d.time_MAX; }),
+            mgroup = dim.group().reduceSum(function(d) { return d.time_MIN; });
+
+
+
+
+
+
+			var minusage_base = age_baseDim.bottom(1)[0].age_base;
+			var maxusage_base= age_baseDim.top(1)[0].age_base;	
+			var minusexp_dur = exp_durDim.bottom(1)[0].exp_dur;
+			var maxusexp_dur= exp_durDim.top(1)[0].exp_dur;
+			var groupGroup = groupDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+														
+			var days_catGroup = days_catDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+														
+			var age_baseGroup = age_baseDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});
+			var exp_durGroup = exp_durDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														return p;},
+														function (p, v) {
+														--p.count;
+														return p;
+														},
+														function () {
+														return {count: 0}});											
+													
+			var group_idGroup = group_idDim.group().reduce(
+														function (p, v) {
+														++p.count;
+														p.time_50Sum += v.time_50;
+														p.url = v.url;
+														p.avgtime_50 = p.count ? p.time_50Sum / p.count : 0;
+														p.term_gSum += v.term_g;
+														p.avgterm_g = p.count ? p.term_gSum / p.count : 0;
+														p.termvginvSum += v.termvginv;
+														p.avgtermvginv = p.count ? p.termvginvSum / p.count : 0;
+														p.outcomenamecatList.push(v.outcomenamecat);
+														return p;},
+														function (p, v) {
+														--p.count;
+														p.time_50Sum -= v.time_50;
+														p.avgtime_50 = p.count ? p.time_50Sum / p.count : 0;
+														p.term_gSum -= v.term_g;
+														p.avgterm_g = p.count ? p.term_gSum / p.count : 0;
+														p.termvginvSum -= v.termvginv;
+														p.avgtermvginv = p.count ? p.termvginvSum / p.count : 0;
+														p.outcomenamecatList.pop(v.outcomenamecat);
+														return p;
+														},
+														function () {
+														return {count: 0,time_50Sum: 0,
+																avgtime_50: 0, 
+																term_gSum: 0, 
+																avgterm_g: 0,
+																termvginvSum: 0,
+																avgtermvginv: 0,
+																outcomenamecatList:[]}});
+
+
+			chart5
+                                .width(windowsW/12*5)
+                                .height(300)
+                                .margins({top: 20, left: 40, right: 20, bottom: 40})
+                                .x(d3.scale.linear().domain([0,800]))
+                                .brushOn(false)
+                                .mouseZoomable(false)
+                                .yAxisLabel("Time")
+								.xAxisLabel("Index")
+                                        .elasticX(false)
+                                        .elasticY(true)
+								.legend(dc.legend().x(80).y(35).itemHeight(13).gap(5).horizontal(1).legendWidth(240).itemWidth(70))
+                                .compose([
+                                    dc.lineChart(chart5)
+                                        .dimension(dim)
+                                        .group(rgroup, "time_MAX")
+                                        .x(d3.scale.linear())
+                                        .ordinalColors(["#f85f73"])
+                                        .yAxisPadding(5)
+                                        .xAxisPadding(1),
+                                    dc.lineChart(chart5)
+                                        .dimension(dim)
+                                        .group(lgroup, "time_50")
+                                        .x(d3.scale.linear())
+										.ordinalColors(["#f7d098"])
+                                        .elasticX(true)
+                                        .elasticY(true)
+                                        .yAxisPadding(1)
+                                        .xAxisPadding(1),
+                                     dc.lineChart(chart5)
+                                        .dimension(dim)
+                                        .group(mgroup,  "time_MIN")
+                                        .x(d3.scale.linear())
+                                        .ordinalColors(["#911f27"])
+                                        .mouseZoomable(true)
+                                        .yAxisPadding(5)
+                                        .xAxisPadding(1)
+                                ]);				
+
+
+
+
+
+
+
+		
+
+				stackgroupbar
+			.width(windowsW/12*3)
+			.height(250)
+			.margins({top: 20, left: 40, right: 20, bottom: 40})
+			.group(groupGroup)
+			.dimension(groupDim)
+			.colors(d3.scale.ordinal().range([ '#fa9fb5', '#c51b8a'])
+			.domain(["Ctrl", "Exp"]))
+			.valueAccessor(function (d) {return d.value.count;})
+			.label(function (d) {
+				return d.key;})
+				
+			.title(function (d) {
+				return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+			})
+			.elasticX(true)
+			.xAxis().ticks(5);
+						 
+						stackagebar
+				        .width(windowsW/12*3)
+						.height(250)
+						.margins({top: 20, left: 40, right: 20, bottom: 40})
+						.dimension(age_baseDim)
+						.group(age_baseGroup)
+						.valueAccessor(function (d) {return d.value.count;})
+						.title(function (d) {
+							return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+						})
+						.transitionDuration(500)
+						.centerBar(true)	
+						.x(d3.scale.linear().domain([30,90]))
+						.yAxisLabel("Number of Groups")
+						.xAxisLabel("Average Age")
+						.colors( ['#005689'])
+						.elasticX(false)
+						.elasticY(true)
+						.yAxis().ticks(5);
+						
+					stackagebar.xAxis().tickFormat(d3.format("02d"))
+					stackagebar.yAxis().tickFormat(d3.format("d"))
+					stackagebar.xUnits(function(){return 50;});	
+					
+													
+													stackdurbar
+									        .width(windowsW/12*5)
+											.height(300)
+											.margins({top: 20, left: 40, right: 20, bottom: 40})
+											.dimension(exp_durDim)
+											.group(exp_durGroup)
+											.valueAccessor(function (d) {return d.value.count;})
+											.title(function (d) {
+												return d.key + "\n" + "Number of Studies:" + "\n" + numberFormat2(d.value.count);
+											})
+											.transitionDuration(500)
+											.colors( ['#70198a', 'rgb(253,174,97)', 'rgb(254,224,144)', 'rgb(215,48,39) '] )
+											 .renderArea(true)
+											.x(d3.scale.linear().domain([0,365]))
+											.y(d3.scale.linear().domain([0, 110]))
+											.yAxisLabel("Number of Groups")
+											.xAxisLabel("Duration of Intervention (days)")
+											.elasticX(false)
+											.elasticY(true)
+											 .mouseZoomable(false)
+											.xAxis().ticks(16)
+											
+										stackdurbar.xAxis().tickFormat(d3.format("d"))
+										stackdurbar.yAxis().tickFormat(d3.format("d"))
+										stackdurbar.xUnits(function(){return 20;});	
+
+												stackdaysbar
+												
+													.width(windowsW/12*3)
+													.height(250)
+													.margins({top: 20, left: 40, right: 20, bottom: 40})
+								
+													.x(d3.scale.ordinal().domain(["<1year", "<90days", ">1year", "Not Available"]))
+													.xUnits(dc.units.ordinal)
+													.brushOn(false)
+													.yAxisLabel("Number of Groups")
+													.xAxisLabel("Days pre Therapy")
+													.dimension(days_catDim)
+													.group(days_catGroup)
+													
+								
+													.valueAccessor(function (d) {return d.value.count;})
+													.label(function (d) {
+															return d.key;})
+													.renderHorizontalGridLines(true)
+								                    .colors([ '#25a55f', '#be3144', '#872341', '#2f1b41'])
+													 
+													.title(function (d) {
+														return d.key + "\n" + "Number of Groups:" + "\n" + numberFormat2(d.value.count);
+													})
+													.elasticX(true);
+													dc.renderAll();
+
+			function AddXAxis(chartToUpdate, displayText) {
+			    chartToUpdate.svg()
+			                .append("text")
+			                .attr("class", "x-axis-label")
+			                .attr("text-anchor", "middle")
+			                .attr("x", chartToUpdate.width()/2)
+			                .attr("y", chartToUpdate.height()-3.5)
+							.attr("margin-top", "200px")
+			                .text(displayText);
+			}
+			});
+	}
+
+	drop1('./static/folloda.csv');
+	</script>  
+
+
+
+
+
+
+
+
+
+<script>  
+	$('body').scrollspy({ target: '#navbar-example' })
+	$('[data-spy="scroll"]').each(function () {
+	  var $spy = $(this).scrollspy('refresh')
+	})
+
+</script>  
+
+
+
+<button type="button" class="btn btn-primary pull-right resetVis" onclick="javascript:dc.filterAll(); dc.renderAll();">Reset visualization</button>
+		</body>
+</html>		

@@ -70,46 +70,89 @@
 				padding: 10px;
 			}
 
-
-					ul.topnav {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #252525;
-	font-family: "Times New Roman", Times, serif;
-}
-
-/* Float the list items side by side */
-ul.topnav li {float: left;}
-
-/* Style the links inside the list items */
-ul.topnav li a {
-    display: inline-block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 18px;
-}
-
-/* Change background color of links on hover */
-ul.topnav li a:hover {background-color: #555;
-text-decoration: underline;}
-
-ul.topnav li a:active {color: #fd8d3c;}
-
-/* Hide the list item that contains the link that should open and close the topnav on small screens */
-ul.topnav li.icon {display: none;}
-
-
-
-
-
 		</style>
 		
-		
+		<script>
+			var a_lat = [];
+			var a_long = [];
+			var countries = [];
+			var study_id = [];
+			var url = [];
+			var keep =[];
+			var urlLinks=[];
+			var link=[];
+			var city=[];
+			var region=[];
+
+			d3.csv("static/Book2.csv", function(stokedatanew) {
+				for (i in stokedatanew){
+					//if (studyID.includes(stokedatanew[i].study_id) == false){
+						countries.push(stokedatanew[i].country)
+						city.push(stokedatanew[i].city)
+						region.push(stokedatanew[i].region)
+						a_lat.push(parseFloat(stokedatanew[i].lat2))
+						a_long.push(parseFloat(stokedatanew[i].long2))
+						study_id.push(stokedatanew[i].study_id_all)
+						urlLinks.push(stokedatanew[i].url)
+						link.push(stokedatanew[i].link)
+					//};
+				};
+
+				
+				fLen=a_lat.length;
+				console.log(fLen);
+				var bangalore =new Array(fLen);
+				
+				function initialize() {
+					for (i = 0; i < fLen; i++) {
+						bangalore[i] = new google.maps.LatLng(a_lat[i],	a_long[i]);
+					}
+					
+					bangalore[fLen] = new google.maps.LatLng(28.0339, 1.6596);
+					var map = new google.maps.Map(document.getElementById('map'), {
+						zoom: 2,
+						center: bangalore[fLen]
+					});
+				
+					for (i = 0; i < fLen; i++) {
+						// Add a marker at the center of the map.
+						addMarker(bangalore[i], map);
+					};
+					// Adds a marker to the map.
+					function addMarker(location, map) {
+
+						var image = {
+					        url: './static/paper.png', // image is 512 x 512
+					        scaledSize : new google.maps.Size(30, 30),
+					    };
+						var icons = {
+				          paper: {
+				            icon: image
+				          }
+				        };
+						// Add the marker at the clicked location, and add the next-available label
+						// from the array of alphabetical characters.
+						var marker = new google.maps.Marker({
+							position: location,
+							//label: labels[labelIndex++ % labels.length],
+							map: map,
+							icon: icons['paper'].icon
+							//title: tag[tagIndex++ % tag.length]
+						});
+
+						var infowindow = new google.maps.InfoWindow({
+						content: "City: "+city[i]+", Region: "+region[i]+", "+countries[i] +"<br>"+ link[i]
+					});
+						
+						marker.addListener('click', function() {
+							infowindow.open(map, marker);
+						});
+						
+					}
+				}
+				google.maps.event.addDomListener(window, 'load', initialize);
+			});
+		</script>
 	</head>
 	<body data-spy="scroll" data-target=".navbar" data-offset="50">
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -120,17 +163,14 @@ ul.topnav li.icon {display: none;}
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
       </button>
-      <p class="navbar-brand" style="color:#fd8d3c;"><b>SCOAR|</b> Interactive Visualization in Stroke Rehabilitation</p>
+      <a class="navbar-brand" href="#"><b>SCOAR|</b> Interactive Visualization in Stroke Rehabilitation</a>
     </div>
     <div>
-       <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="topnav" id="myTopnav">
-      		<li><a   href="./index.html">Overview</a></li>
-	        <li><a   href="./Clinical Trials.html">Clinical Trials</a></li>
-			<li><a  style="color: #fecc5c;" href="#">Our Team</a></li>
-			<li class="icon">
-				<a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
-			</li>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+      		<li><a href="./index.html">Home</a></li>
+	        <li><a href="./page2.html">Page 2</a></li>
+			<li><a href="#">Page 3</a></li>
     </ul>
       </div>
     </div>
@@ -150,8 +190,9 @@ ul.topnav li.icon {display: none;}
 							<h2 style="color:#0047b3">Meet our amazing team!</h2> 
 							<p align="justify"> <strong> Interdisciplinary study </strong> plays an important role in solving complex real world problems and making desisions. 
                             It synthesizes broad perspectives, knowledge, and skills to explore and integrate knowledge across multiple disciplines. 
-                            The data visualization website for SCOAR is the result of <strong>interdisciplinary collaboration</strong> between professors and Ph.D. students 
-                            in engineering, information science, neuroscience, and rehabilitation. Below, we provide a brief introduction to our team members below:</p>
+                            The data visualization website for SCOAR is the result of a <strong>interdisciplinary study and research </strong> which is created through the 
+                            collabration of professors and Ph.D. students in engineering, information science, neuroscience, and rehabilitation. We provide a brief introduction 
+                            to our team members below:</p>
 						</div>
 					</div>
 				<!-- Team Members Row -->
@@ -159,143 +200,86 @@ ul.topnav li.icon {display: none;}
 						
 						
 						<table id="teamtable"  style="width:100%">
-						<tbody>
-						<tr>
-							<td>
-								<img  src="./static/keith.jpg" class="img-responsive"  style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-							<br>
-								<b>Keith Lohse, PhD</b>
-								<br>
-									Keith is the principal investigator of the Rehabilitation Informatics Lab at Auburn University. 
-									He received a joint-PhD in psychology, cognitive science, and neuroscience in 2012 from the University of Colorado and was a 
-									post-doctoral research associate at the University of British Columbia. The evidence-base in rehabilitation is always expanding. Researchers, 
-									clinicians, and other stakeholders need effective tools for collecting, managing, analyzing, and visualizing data. 
-									This need is especially urgent as the scale of our information grows and fields embrace progressively “bigger” data. As such, the goal of Keith's 
-									research is to help improve methods for data collection, management, and analysis in rehabilitation research and, ultimately, to improve the quality 
-									of life for individuals with disabilities.
-							</td>
-						</tr>
 						
-						<tr>
-							<td>
-								<img  src="./static/nasrin.jpg" class="img-responsive"   style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-							<br>
-								<b>
-								Nasrin Mohabbati Kalejahi
-								</b>
-								<br>
-									Nasrin is a Ph.D. student and Graduate Research and Teaching Assistant in the Industrial and Systems Engineering Department 
+						
+						
+							  <tr>
+							  <th rowspan="2", width="15%"><img  src="./static/keith.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td width="85%"><b>Keith Lohse, PhD</b></td>
+							  </tr>
+							  <tr>
+								<td width="85%", style="text-align:justify">Keith is the principal investigator of the Rehabilitation Informatics Lab at Auburn University. 
+                                He received a joint-PhD in psychology, cognitive science, and neuroscience in 2012 from the University of Colorado and was a 
+                                post-doctoral research associate at the University of British Columbia. The evidence-base in rehabilitation is always expanding. Researchers, 
+                                clinicians, and other stakeholders need effective tools for collecting, managing, analyzing, and visualizing data. 
+                                This need is especially urgent as the scale of our information grows and fields embrace progressively “bigger” data. As such, the goal of Keith's 
+                                research is to help improve methods for data collection, management, and analysis in rehabilitation research and, ultimately, to improve the quality 
+                                of life for individuals with disabilities.</td>
+							  </tr>
+							  
+						
+							
+							  <tr style="margin-top:30px;">
+							  <th rowspan="2", width="15%"><img  src="./static/nasrin.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td ><b>Nasrin Mohabbati Kalejahi</b></td>
+							  </tr>
+							  <tr>
+								<td style="text-align:justify">Nasrin is a Ph.D. student and Graduate Research and Teaching Assistant in Industrial and Systems Engineering Department 
                                 at Auburn University. Her research mainly focuses on mathematical modeling and optimization of risk-averse stochastic problems with real world 
                                 applications such as Portfolio Optimization, Insurance Lost Optimization, and Vehicle Routing Problems (VRP). She is also interested in big data 
                                 analytics and she has studied Data Mining, Big Data, and Data Visualization. She received her Masters of Industrial and Systems Engineering (MISE) 
                                 from Auburn University (Fall 2016). She has a Master of Science and a Bachelor of Science degree in Industrial Engineering from Amirkabir University 
-                                of Technology (Iran) and Tabriz University (Iran), respectively.
-									
-							</td>
-						</tr>
-						
-						
-						<tr>
-							<td>
-								<img  src="./static/moh.jpg" class="img-responsive"   style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-							<br>
-								<b>
-								Mohammad Ali Alamdar Yazdi
-								</b>
-								<br>
-								Mohammad Ali is a Ph.D student in Industrial and Systems Engineering at Auburn University. 
-								He has a Master of Science and a Bachelor of Science degree in Industrial Engineering from Auburn University and Sharif University 
-                                of Technology (Iran), respectively.
-								He is also finishing another Master of Science degree in Computer Science and Software Engineering at Auburn University.
-								His research mainly focuses on Real-time Data Analytics. He is also interested in Human Computer Interactions and Data Visualization. 
-								  
-									
-							</td>
-						</tr>
-						
-						
-							<tr>
-							<td>
-								<img  src="./static/meg.jpg" class="img-responsive"   style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-							<br>
-								<b>
-								Fadel Megahed, PhD
-								</b>
-								<br>
-								Fadel M. Megahed is an Assistant Professor of Information Systems and Analytics at Miami University. He received his Ph.D. 
+                                of Technology (Iran) and Tabriz University (Iran), respectively.</td>
+							  </tr>
+							 <tr style="margin-top:30px;">
+							  <th rowspan="2", style="padding-bottom: 10px; padding-top: 10px;"><img  src="./static/moh.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td><b>Mohammad Ali Alamdar Yazdi</b></td>
+							  </tr>
+							  <tr>
+								<td style="text-align:justify">Mohammad Ali is a Ph.D student in Industrial and Systems Engineering at Auburn University.</td>
+							  </tr>
+							  <tr style="margin-top:30px;">
+							  <th rowspan="2", style="padding-bottom: 10px; padding-top: 10px;"><img  src="./static/meg.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td><b>Fadel Megahed, PhD</b></td>
+							  </tr>
+							  <tr>
+								<td style="text-align:justify">Fadel M. Megahed is an Assistant Professor of Information Systems and Analytics at Miami University. He received his Ph.D. 
                                 and M.S. in Industrial and Systems Engineering from Virginia Tech, and a B.S. in Mechanical Engineering from the American University in Cairo. 
                                 His current research focuses on creating new tools to store, organize, analyze, model, and visualize the large heterogeneous data sets associated with 
-                                modern manufacturing, healthcare and service environments.	
-							</td>
-						</tr>
-						
-			<tr>
-							<td>
-								<img  src="./static/sss.png" class="img-responsive"  style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-							<br>
-								<b>
-								Sydney Schaefer, PhD
-								</b>
-								<br>
-								Sydney Schaefer is an Assistant Professor in the School of Biological and Health Systems Engineering at Arizona State 
+                                modern manufacturing, healthcare and service environments. </td>
+							  </tr>
+                              
+                              <tr style="margin-top:30px;">
+							  <th rowspan="2", style="padding-bottom: 10px; padding-top: 10px;"><img  src="./static/sys.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td><b>Sydney Schaefer, PhD</b></td>
+							  </tr>
+							  <tr>
+								<td style="text-align:justify">Sydney Schaefer is an Assistant Professor in the School of Biological and Health Systems Engineering at Arizona State 
                                 University where she is the director of the Motor Rehabilitation and Learning Lab. Her lab pursues basic and translational research to support evidence-based
-                                approaches to clinical neurorehabilitation.
-							</td>
-						</tr>
-						
-						
-						<tr>
-							<td>
-								<img  src="./static/lab.jpg" class="img-responsive"   style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-							<br>
-								<b>
-								Lara Boyd, PT PhD
-								</b>
-								<br>
-								Lara Boyd is the Canada Research Chair in the Neurobiology of Motor Learning and Director of the Brain Behavior Lab in the Faculty of 
+                                approaches to clinical neurorehabilitation.</td>
+							  </tr>
+							   
+                              <tr style="margin-top:30px;">
+							  <th rowspan="2", style="padding-bottom: 10px; padding-top: 10px;"><img  src="./static/lab.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td><b>Lara Boyd, PT PhD</b></td>
+							  </tr>
+							  <tr>
+								<td style="text-align:justify">Lara Boyd is the Canada Research Chair in the Neurobiology of Motor Learning and Director of the Brain Behavior Lab in the Faculty of 
                                 Medicine at the University of British Columbia. An expert in the use of magnetic resonance imaging (MRI) and transcranial magnetic stimulation (TMS), her work seeks to 
-                                understand neurobiological basis of recovery from stroke.
-							</td>
-						</tr>
-						
-						
-						<tr>
-							<td>
-								<img  src="./static/cel.jpg" class="img-responsive"   style="border-radius: 25px" width="700" height="700">
-							</td>
-
-							<td style="text-align:justify;">
-								<b>
-								Catherine Lang, PT PhD
-								</b>
-								<br>
-								Catherine Lang is a Professor of Physical Therapy, Neurology, and Occupational Therapy at the Washington University School of 
+                                understand neurobiological basis of recovery from stroke.</td>
+							  </tr>
+							   
+                              <tr style="margin-top:30px;">
+							  <th rowspan="2", style="padding-bottom: 10px; padding-top: 10px;"><img  src="./static/cel.jpg" class="img-responsive"  style="border-radius: 25px;" height="170" width="170"> </th>
+								<td><b>Catherine Lang, PT PhD</b></td>
+							  </tr>
+							  <tr>
+								<td style="text-align:justify">Catherine Lang is a Professor of Physical Therapy, Neurology, and Occupational Therapy at the Washington University School of 
                                 Medicine in St. Louis. Her research is focused on characterizing neural and behavioral changes over the course of stroke recovery, improving the efficacy of  
                                 current practices in motor rehabilitation, and developing new interventions that individualize rehabilitation for people with neurological injury, particulary 
-                                those with stroke. 
-							</td>
-						</tr>
-						</tbody>
-							  
-                 </table>
+                                those with stroke. </td>
+							  </tr>
+                              </table>
 
 						
 						
@@ -303,9 +287,6 @@ ul.topnav li.icon {display: none;}
 					
 
              </div>
-			 
-			
-               
 			</section>
 
 
@@ -321,24 +302,12 @@ ul.topnav li.icon {display: none;}
                 see your data added to the SCOAR database, please contact Keith Lohse. Please keep in mind that SCOAR is also continuously being updated. We will include version notes here on 
                 which RCTs have been added to the database as new RCTs are incorporated.</p>
                 
-                <h3 style="color:#0047b3">Creating a "Living" Database</h3>
-				<p align="justify"> As the SCOAR database grows, we are working to create a web portal that will allow authors to upload their own data and work through quality assurance 
-                checks with a member of our team. In the meantime, if your are interested in having your data added to the SCOAR database, please contact us through the form below. 
-                The SCOAR database is also continuously updated by systematic reviews conducted by our research team. At the moment, all of the data in visualization are based on the systematic 
-                review that was conducted in 2014, with the final data extraction and quality assurance completed by 2016-03-31 (see the <i>Version Notes</i> below). Another systematic review 
-                was conducted in 2016-07 and those data are currently undergoing quality assurance screening. When quality assurance checks are complete, these new data will be added to the database. 
-                
                 <h3 style="color:#0047b3">Version Notes</h3>
 				<p align="justify"> <b>2016-03-31:</b> Initial data extraction (see Lohse et al., 2016) or the full list of included references <a href="https://github.com/keithlohse/SCOAR/" target="_blank">here</a>.</p>
                 
                 <h3 style="color:#0047b3">Publications</h3>
-				<ol>
-                <li><p align="justify"> Lohse KR, Schaefer SY, Raikes AC, Boyd LA, Lang CE. Asking new questions with old data: The Centralized Open-Access Rehabilitation database for Stroke. 
+				<p align="justify"> Lohse KR, Schaefer SY, Raikes AC, Boyd LA, Lang CE. Asking new questions with old data: The Centralized Open-Access Rehabilitation database for Stroke. 
                 <i>Frontiers in Neurology</i>. 2016;7.</p>
-                <li><p align="justify"> Mohabbati-Kalejahi, N, Megahed, F, Alamdar Yazi, MA, Schaefer, SY, Boyd, LA, Lang, CE, Lohse, KR. Streamlining the scientific method with structured data archives: 
-                Data driven insights from the stroke rehabilitation literature. 
-                <i>Science</i>. Under Review.</p>
-                </ol>
 				</div></div>
             </section>
 
@@ -381,7 +350,7 @@ ul.topnav li.icon {display: none;}
 			    else{        
 			        $from="From: $name<$email>\r\nReturn-path: $email";
 			        $subject="Message sent using your contact form";
-			        mail("rehabinformatics@gmail.com", $subject, $message, $from);
+			        mail("krl0022@tigermail.auburn.edu", $subject, $message, $from);
 			        echo "Email sent!";
 			        }
 			    }  
