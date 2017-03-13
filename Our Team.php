@@ -170,7 +170,7 @@ ul.topnav li.icon {display: none;}
 								<b>Keith Lohse, PhD</b>
 								<br>
 									Keith is the principal investigator of the Rehabilitation Informatics Lab at Auburn University. 
-									He received a joint-PhD in psychology, cognitive science, and neuroscience in 2012 from the University of Colorado and was a 
+									He received a joint PhD in psychology, cognitive science, and neuroscience in 2012 from the University of Colorado and was a 
 									post-doctoral research associate at the University of British Columbia. The evidence-base in rehabilitation is always expanding. Researchers, 
 									clinicians, and other stakeholders need effective tools for collecting, managing, analyzing, and visualizing data. 
 									This need is especially urgent as the scale of our information grows and fields embrace progressively “bigger” data. As such, the goal of Keith's 
@@ -324,7 +324,7 @@ ul.topnav li.icon {display: none;}
                 <h3 style="color:#0047b3">Creating a "Living" Database</h3>
 				<p align="justify"> As the SCOAR database grows, we are working to create a web portal that will allow authors to upload their own data and work through quality assurance 
                 checks with a member of our team. In the meantime, if your are interested in having your data added to the SCOAR database, please contact us through the form below. 
-                The SCOAR database is also continuously updated by systematic reviews conducted by our research team. At the moment, all of the data in visualization are based on the systematic 
+                The SCOAR database is also continuously updated through systematic reviews conducted by our research team. At the moment, all of the data in visualization are based on the systematic 
                 review that was conducted in 2014, with the final data extraction and quality assurance completed by 2016-03-31 (see the <i>Version Notes</i> below). Another systematic review 
                 was conducted in 2016-07 and those data are currently undergoing quality assurance screening. When quality assurance checks are complete, these new data will be added to the database. 
                 
@@ -335,9 +335,9 @@ ul.topnav li.icon {display: none;}
 				<ol>
                 <li><p align="justify"> Lohse KR, Schaefer SY, Raikes AC, Boyd LA, Lang CE. Asking new questions with old data: The Centralized Open-Access Rehabilitation database for Stroke. 
                 <i>Frontiers in Neurology</i>. 2016;7.</p>
-                <li><p align="justify"> Mohabbati-Kalejahi, N, Megahed, F, Alamdar Yazi, MA, Schaefer, SY, Boyd, LA, Lang, CE, Lohse, KR. Streamlining the scientific method with structured data archives: 
-                Data driven insights from the stroke rehabilitation literature. 
-                <i>Science</i>. Under Review.</p>
+                <li><p align="justify"> Mohabbati-Kalejahi, N, Alamdar Yazdi, MA, Megahed, F, Schaefer, SY, Boyd, LA, Lang, CE, Lohse, KR. Streamlining science with structured data archives: 
+                Insights from stroke rehabilitation. 
+                <i>Scientometrics</i>. Under Review.</p>
                 </ol>
 				</div></div>
             </section>
